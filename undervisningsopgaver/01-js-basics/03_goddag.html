@@ -9,7 +9,14 @@
 
 <body>
 
+   <input type="text" id="navn">
+   <button>Klik og klik i konsollen!</button>
     <script>
+        document.querySelector("button").addEventListener("click",buttonClicked);
+        function buttonClicked() {
+           let brugerNavn = document.querySelector("#navn").value;
+            console.log(`Tillykke dit navn er ${brugerNavn}`);
+        }
 
 
     </script>
