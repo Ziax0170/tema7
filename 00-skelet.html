@@ -8,9 +8,21 @@
 </head>
 
 <body>
+   <main>
+       <article>
+           <h2>HTML we et opmærkningssprog</h2>
+           <p>
+               HTML fortæller hvilke elementer der er på en webside ved at mærke disse elementer op med HTML-tags. Dette er fx et p-element der bor i et article element det bor i main <br> HTML mærker indholdet op og laver strukturen, DOM'en
+           </p>
+       </article>
+
+
+   </main>
     <script>
-
-
+        document.querySelector("article").addEventListener("click",doSomeThing);
+        function doSomeThing(){
+            this.style.background ="red";
+        }
 
     </script>
 </body>
