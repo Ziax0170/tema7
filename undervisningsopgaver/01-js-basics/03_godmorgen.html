@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+   <button id="greetings">Klik og klik i konsollen!</button>
+    <script>
+        document.querySelector("button").addEventListener("click",buttonClicked);
+        function buttonClicked() {
+            console.log(buttonClicked);
+        }
+var myDate = new Date();
+var hrs = myDate.getHours();
+
+var greet;
+
+function buttonClicked() {
+
+
+if (hrs >= 24 && hrs <= 5 )
+  greet = 'Godnat';
+else if (hrs >= 5 && hrs <= 10)
+  greet = 'Godmorgen';
+else if (hrs >= 10 && hrs <= 18)
+  greet = 'Godaften';
+else if (hrs >= 18 && hrs <= 24)
+  greet = 'Godaften';
+
+document.getElementById('greetings').innerHTML ='<b>' + greet + '</b>';
+}
+</script>
+</body>
+</html>

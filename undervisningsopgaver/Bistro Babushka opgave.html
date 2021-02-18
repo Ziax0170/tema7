@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+  <h1>Persongalleri</h1>
+   <main>
+      <h1>Starter</h1>
+      <section class="productContainer">
+          <div class="list-product">
+             <a href="">
+                 <img class="product-small-img" alt="" src="">
+             </a>
+              
+              <h3 class="name"></h3>
+              <h4 class="price"></h4>
+              <button>details</button>
+          </div>
+          <div class="list-product">
+              <img class="product-small-img" alt="" src="">
+              <h3 class="name"></h3>
+              <h4 class="price"></h4>
+              <button>details</button>
+          </div>
+          <div class="list-product">
+              <img class="product-small-img" alt="" src="">
+              <h3 class="name"></h3>
+              <h4 class="price"></h4>
+              <button>details</button>
+          </div>
+          <div class="list-product">
+              <img class="product-small-img" alt="" src="">
+              <h3 class="name"></h3>
+              <h4 class="price"></h4>
+              <button>details</button>
+          </div>
+          <div class="list-product">
+              <img class="product-small-img" alt="" src="">
+              <h3 class="name"></h3>
+              <h4 class="price"></h4>
+              <button>details</button>
+          </div>
+          <div class="list-product">
+              <img class="product-small-img" alt="" src="">
+              <h3 class="name"></h3>
+              <h4 class="price"></h4>
+              <button>details</button>
+          </div>
+          
+      </section>
+       
+       
+   </main>
+   <style>
+       
+       main{
+           --auto-grid-min-size: 16rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+  grid-gap: 1rem;
+           
+       }
+       article{
+           max-height: 600px;
+           max-width: 600px;
+            border: 2px solid #333;
+           column-gap: 20px;
+           padding: 4px;
+
+       }
+      
+       img {
+           max-height: 220px;
+           max-width: 220px;
+           padding: 20px;
+       }
+      
+       
+    
+    </style>
+    <script>
+    const url ="https://babushka-dd8a.restdb.io/rest/menu";
+    
+        const medieurl ="https://babushka-dd8a.restdb.io/media";
+        
+        
+    const options = {
+        headers:{
+            'x-apikey':"600ec2fb1346a1524ff12de4" 
+        }
+    };
+        
+     let main = document.querySelector("main");
+let modal = document.querySelector(".modal");
+let categories_link = "http://kea-alt-del.dk/t5/api/categories";
+let product_link = "http://kea-alt-del.dk/t5/api/product?id=";
+
+modal.addEventListener("click", function(){
+	modal.style.display="none";
+})
+
+function loadJSON(link, process, container=null){
+	fetch(link).then(e=>e.json()).then(data=>process(data, container));
+}
+
+function loopCategories(data){
+	data.forEach(category => {
+		let clone = document.querySelector(".category").content.cloneNode(true);
+		let link = "http://kea-alt-del.dk/t5/api/productlist?category=" + category;
+		let productContainer = document.createElement('section');
+		productContainer.classList.add("productContainer");
+		clone.querySelector("h1").textContent = category;
+		main.appendChild(clone);
+		main.appendChild(productContainer);
+		loadJSON(link, showList, productContainer);
+	});
+}
+
+function showList(data, container){
+	data.forEach(product => {
+		let clone = document.querySelector(".product").content.cloneNode(true);
+		let name = clone.querySelector(".name");
+		let image = clone.querySelector(".product-small-img");
+		let price = clone.querySelector(".price");
+		let discount = clone.querySelector(".discount");
+		let link = clone.querySelector("a");
+		let button = clone.querySelector("button");
+		button.addEventListener("click", function(){
+			console.log(product.id);
+			loadJSON(product_link + product.id, showDetails);
+		})
+		name.textContent = product.name;
+		image.src = "http://kea-alt-del.dk/t5/site/imgs/small/" + product.image + "-sm.jpg";
+		image.alt = product.name;
+		price.textContent = "Price: " + product.price + ",-";
+		if(product.discount > 0){
+			discount.textContent = "Now: " + Math.floor(product.price*product.discount/100) + ",-";
+			price.style.textDecoration="line-through";
+		}else{
+			discount.style.display="none";
+		}
+		link.href = "http://kea-alt-del.dk/t5/site/imgs/large/" + product.image + ".jpg";
+		container.appendChild(clone);
+	});
+}
+
+function showDetails(data){
+	console.log(data);
+	modal.style.display="block";
+	modal.querySelector(".modal-name").textContent = data.name;
+	modal.querySelector(".modal-image").src = "http://kea-alt-del.dk/t5/site/imgs/small/" + data.image + "-sm.jpg";
+	modal.querySelector(".modal-description").textContent = data.longdescription;
+	modal.querySelector(".modal-price").textContent = "Price: " + data.price;
+	modal.querySelector(".modal-discount").textContent = "Now: " + Math.floor(product.price*product.discount/100) + ",-";
+}
+
+loadJSON(categories_link, loopCategories);
+
+    
+    </script>
+   
+</body>
+</html>

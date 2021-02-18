@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+<article id="gris">
+    <h3></h3>
+    <p></p>
+    <img src="" alt="">
+</article>
+
+
+<script>
+let object={"Dyr" : "Dyr: gris," , "type" : "Type: pattedyr," ,"Billed":"http://mabe-kea.dk/E19/pics/pig.png", "Levested" : "Levested: svinefarme,"};
+    const gris = {
+        "Dyr" : "Dyr: gris," ,
+        "type" : "Type: pattedyr," ,
+        "Levested" : "Levested: svinefarme,",
+        "Billed":"http://mabe-kea.dk/E19/pics/pig.png"
+    }
+
+    const destination = document.querySelector("#gris");
+    const para = `${object.type}${object.Levested}`;
+    destination.querySelector("h3").textContent = object.Dyr;
+    destination.querySelector("p").textContent = para;
+    destination.querySelector("img").src = object.Billed;
+
+    console.log(`${object.Dyr} ${object.type} ${object.Levested}`)
+
+</script>
+
+</body>
+</html>

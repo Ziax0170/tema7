@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+  <h1>Persongalleri</h1>
+   <main>
+      <template>
+       <article>
+           <img src="" alt="" class="billede">
+           <h2 class="navn"></h2>
+           <p class="titel"></p>
+           <p class="hobby"></p>
+           <p class="troende"></p>
+           <p class="fødselsdag"></p>
+       </article>
+       </template>
+       
+       
+   </main>
+   <style>
+       
+       main{
+           --auto-grid-min-size: 16rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+  grid-gap: 1rem;
+           
+       }
+       article{
+           max-height: 600px;
+           max-width: 600px;
+            border: 2px solid #333;
+           column-gap: 20px;
+           padding: 4px;
+
+       }
+      
+       img {
+           max-height: 220px;
+           max-width: 220px;
+           padding: 20px;
+       }
+      
+       
+    
+    </style>
+    <script>
+    const url ="https://persongalleri-5d3e.restdb.io/rest/persongalleri";
+    
+        const medieurl ="http://persongalleri-5d3e.restdb.io/media/";
+        
+        
+    const options = {
+        headers:{
+            'x-apikey':"600fe9211346a1524ff12e31" 
+        }
+    };
+        
+    async function hentData(){
+        const resspons = await fetch(url,options);
+        const json = await resspons.json();
+        vis(json);
+    }  
+        
+    
+        const main = document.querySelector("main");
+        const template = document.querySelector("template").content;
+    
+        function vis(json){
+            console.log(json)
+            json.forEach(person => {
+                const klon = template.cloneNode(true);
+                klon.querySelector(".billede").src = medieurl + person.billede;
+                klon.querySelector(".navn").textContent = person.fornavn + "\n" + person.efternavn;
+                klon.querySelector(".titel").textContent = "Title: " + person.titel;
+                klon.querySelector(".hobby").textContent = "Hobby: " + person.hobby;
+                klon.querySelector(".troende").textContent = "Troende: " + person.troende;
+                klon.querySelector(".fødselsdag").textContent = "Fødselsdag: " + person.fødselsdag;
+                main.appendChild(klon);
+            })
+        }
+        
+        hentData();
+    
+    
+    </script>
+   
+</body>
+</html>
